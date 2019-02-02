@@ -17,6 +17,9 @@ __author__ = 'Joe Slowik, Dragos Inc.'
 
 import math, requests, os, zipfile, io, datetime, difflib, editdistance, argparse
 
+# similarity threshold value
+threshold = 0.5
+
 def argumentParser():
     parser = argparse.ArgumentParser()
     parser.add_argument('wordlist', action='store', help='Word List file to use for similarity matches')
@@ -97,7 +100,7 @@ def scoringFunction(args, dictionary, domains):
             #print("Score: " + str(score))
             if score > tempVal:
                 tempVal = score
-        if tempVal < 0.5:
+        if tempVal < threshold:
             pass
         else:
             domainRecord = Domain(tempVal,domain)
