@@ -132,7 +132,7 @@ if __name__ == '__main__':
         type = "editdistance"
     elif parser.type == "j":
         type = "jaccard"
-    sortScore = sorted(scorelist, key=lambda Domain: Domain.score, reverse=True)
+    sortScore = sorted(scorelist, key=lambda Domain: (Domain.score, Domain.domain), reverse=True)
     fileName = parser.outputDirectory + 'newDomains_' + calculatePreviousDay() + '_' + type + '.txt'
     with open(fileName,'w') as file:
         for item in sortScore:
