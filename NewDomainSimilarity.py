@@ -53,10 +53,10 @@ def retrieveDomainList():
     dateValue = date + '.zip'
     dateB64 = base64.b64encode(dateValue.encode('utf-8')).decode('utf-8')
     #format: https://whoisds.com//whois-database/newly-registered-domains/YYYY-MM-DD.zip/nrd
-    url = 'https://whoisds.com/whois-database/newly-registered-domains/' + dateB64 + '/nrd'
-    #print(url)
+    whoisds = 'https://whoisds.com/whois-database/newly-registered-domains/' + dateB64 + '/nrd'
+    #print(whoisds)
     try:
-        response = requests.get(url)
+        response = requests.get(whoisds)
         #print(str(response.content))
         try:
             with zipfile.ZipFile(io.BytesIO(response.content)) as zipresponse:
@@ -69,8 +69,8 @@ def retrieveDomainList():
                            #print(str(line))
                            item = line.decode('ascii')
                            domainlist.append(str(item).rstrip('\r\n'))
-        except:
-            print('Error in processing Zip')
+        except Exception as e:
+            print('Error in processing Zip\n%s' % e)
     except:
         print("Error in retrieving response.")
     return domainlist
