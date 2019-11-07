@@ -89,7 +89,8 @@ def scoringFunction(args, dictionary, domains):
                     score = seqmatch.ratio()
                     #print(str(score))
                 elif args == 'e':
-                    score = 100 - editdistance.eval(item,record)
+                    # take editdistance diff divided by 100 to get decimal percentage 
+                    score = (100 - editdistance.eval(item,record))/100
                     #print(str(score))
                 elif args == 'j':
                     score = jaccardTest(item,record)
