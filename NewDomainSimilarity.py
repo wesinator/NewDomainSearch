@@ -17,8 +17,6 @@ __author__ = 'Joe Slowik, Dragos Inc.'
 
 import math, requests, os, zipfile, io, datetime, difflib, editdistance, argparse
 
-# similarity threshold value
-threshold = 0.5
 
 def argumentParser():
     parser = argparse.ArgumentParser()
@@ -79,6 +77,9 @@ def retrieveDomainList():
     return domainlist
 
 def scoringFunction(args, dictionary, domains):
+    # similarity threshold value
+    threshold = 0.5
+
     scoredList = []
     for domain in domains:
         item = domain.split('.')[0]
