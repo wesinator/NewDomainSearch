@@ -28,9 +28,10 @@ def argumentParser():
     return parser.parse_args()
 
 class Domain:
-    def __init__(self,score,domain):
+    def __init__(self,score,domain,keywords={}):
         self.score = score
         self.domain = domain
+        self.keywords = keywords
     def __repr__(self):
         return repr((self.score,self.domain))
 
@@ -84,7 +85,8 @@ def scoringFunction(args, dictionary, domains):
     for domain in domains:
         item = domain.split('.')[0]
         #print(item)
-        tempVal = 0.0
+        
+        keywords = {}
         for record in dictionary:
             #print(record)
             if args != '':
@@ -99,12 +101,10 @@ def scoringFunction(args, dictionary, domains):
                     score = jaccardTest(item,record)
                     #print(str(score))
             #print("Score: " + str(score))
-            if score > tempVal:
-                tempVal = score
-        if tempVal < threshold:
-            pass
-        else:
-            domainRecord = Domain(tempVal,domain)
+            if score >= threshold:
+                keywords[record] = score
+        if keywords:
+            domainRecord = Domain(tempVal,domain,keywords=keywords)
             #print(str(domainRecord))
             scoredList.append(domainRecord)
     return scoredList
